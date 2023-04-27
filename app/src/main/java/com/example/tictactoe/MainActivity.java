@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     int[][] grid = {{0,0,0}, {0,0,0}, {0,0,0}};
 
     //ImageViews
-    ImageView i1, i2, i3, i4, i5, i6, i7, i8, i9;
+    ImageView[][] views = new ImageView[3][3];
     boolean player1 = true; // cross
     boolean player2 = false; // zero
     String player1Name = "";
@@ -126,28 +126,22 @@ public class MainActivity extends AppCompatActivity {
                     b.setVisibility(View.GONE);
                     isGameGoing = true;
                     turns = 0;
-                    i1.setImageResource(R.drawable.transparent_back);
-                    i2.setImageResource(R.drawable.transparent_back);
-                    i3.setImageResource(R.drawable.transparent_back);
-                    i4.setImageResource(R.drawable.transparent_back);
-                    i5.setImageResource(R.drawable.transparent_back);
-                    i6.setImageResource(R.drawable.transparent_back);
-                    i7.setImageResource(R.drawable.transparent_back);
-                    i8.setImageResource(R.drawable.transparent_back);
-                    i9.setImageResource(R.drawable.transparent_back);
+                    for (int i = 0; i <= 2; i++) for (int j = 0; j <=2; j++)
+                        views[i][j].setImageResource(R.drawable.transparent_back);
                     for (int i = 0; i <= 2; i++) for (int j = 0; j <=2; j++) grid[i][j] = 0;
                 });
                 l.addView(b);
 
                 TextView scoreFirstPlayer = findViewById(R.id.playerOneScore);
                 TextView scoreSecondPlayer = findViewById(R.id.playerTwoScore);
-                if (!player1) {
-                    int plusOne = Integer.parseInt(String.valueOf(scoreFirstPlayer.getText())) + 1;
-                    scoreFirstPlayer.setText(String.valueOf(plusOne));
-                } else if (!player2) {
-                    int plusOne = Integer.parseInt(String.valueOf(scoreSecondPlayer.getText())) + 1;
-                    scoreSecondPlayer.setText(String.valueOf(plusOne));
-                }
+                if (turns != 9) {
+                    if (!player1) {
+                        int plusOne = Integer.parseInt(String.valueOf(scoreFirstPlayer.getText())) + 1;
+                        scoreFirstPlayer.setText(String.valueOf(plusOne));
+                    } else if (!player2) {
+                        int plusOne = Integer.parseInt(String.valueOf(scoreSecondPlayer.getText())) + 1;
+                        scoreSecondPlayer.setText(String.valueOf(plusOne));
+                    }                }
             }
         }
     }
@@ -166,24 +160,22 @@ public class MainActivity extends AppCompatActivity {
         playerOneName.setText(player1Name);
         playerTwoName.setText(player2Name);
 
-        i1 = findViewById(R.id.i1);
-        i2 = findViewById(R.id.i2);
-        i3 = findViewById(R.id.i3);
-        i4 = findViewById(R.id.i4);
-        i5 = findViewById(R.id.i5);
-        i6 = findViewById(R.id.i6);
-        i7 = findViewById(R.id.i7);
-        i8 = findViewById(R.id.i8);
-        i9 = findViewById(R.id.i9);
+        views[0][0] = findViewById(R.id.i1);
+        views[0][1] = findViewById(R.id.i2);
+        views[0][2] = findViewById(R.id.i3);
+        views[1][0] = findViewById(R.id.i4);
+        views[1][1] = findViewById(R.id.i5);
+        views[1][2] = findViewById(R.id.i6);
+        views[2][0] = findViewById(R.id.i7);
+        views[2][1] = findViewById(R.id.i8);
+        views[2][2] = findViewById(R.id.i9);
 
-        i1.setOnClickListener((View v) -> {select(i1, 0, 0);});
-        i2.setOnClickListener((View v) -> {select(i2, 0, 1);});
-        i3.setOnClickListener((View v) -> {select(i3, 0, 2);});
-        i4.setOnClickListener((View v) -> {select(i4, 1, 0);});
-        i5.setOnClickListener((View v) -> {select(i5, 1, 1);});
-        i6.setOnClickListener((View v) -> {select(i6, 1, 2);});
-        i7.setOnClickListener((View v) -> {select(i7, 2, 0);});
-        i8.setOnClickListener((View v) -> {select(i8, 2, 1);});
-        i9.setOnClickListener((View v) -> {select(i9, 2, 2);});
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 0; j <= 2; j++) {
+                int finalI = i;
+                int finalJ = j;
+                views[i][j].setOnClickListener((View v) -> {select(views[finalI][finalJ], finalI, finalJ);});
+            }
+        }
     }
 }
