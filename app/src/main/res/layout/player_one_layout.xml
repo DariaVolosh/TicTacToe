@@ -18,5 +18,13 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:src="@drawable/cross"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="@dimen/_10sdp"/>
+        <TextView
+            android:id="@+id/playerOneScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"
+            android:text="0"
+            android:layout_marginTop="@dimen/_10sdp"/>
     </LinearLayout>

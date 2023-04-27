@@ -2,10 +2,14 @@ package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     TextView winnerMessage;
     // 0 means empty, 1 means cross, 2 means zero
     int[][] grid = {{0,0,0}, {0,0,0}, {0,0,0}};
+
+    //ImageViews
+    ImageView i1, i2, i3, i4, i5, i6, i7, i8, i9;
     boolean player1 = true; // cross
     boolean player2 = false; // zero
     String player1Name = "";
@@ -102,6 +109,46 @@ public class MainActivity extends AppCompatActivity {
 
             isGameGoing = isWinner();
             turns++;
+
+            if (turns == 9) winnerMessage.setText("It's a draw!");
+            if (turns == 9 || !isGameGoing) {
+                LinearLayout l = null;
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    l = findViewById(R.id.gameGoingContainer);
+                } else {
+                    l = findViewById(R.id.leftSide);
+                }
+                Button b = (Button) LayoutInflater.from(this).inflate(R.layout.reset_button, null);
+                b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                b.setOnClickListener((View v) -> { winnerMessage.setText("");
+                    winnerMessage.setText("");
+                    b.setVisibility(View.GONE);
+                    isGameGoing = true;
+                    turns = 0;
+                    i1.setImageResource(R.drawable.transparent_back);
+                    i2.setImageResource(R.drawable.transparent_back);
+                    i3.setImageResource(R.drawable.transparent_back);
+                    i4.setImageResource(R.drawable.transparent_back);
+                    i5.setImageResource(R.drawable.transparent_back);
+                    i6.setImageResource(R.drawable.transparent_back);
+                    i7.setImageResource(R.drawable.transparent_back);
+                    i8.setImageResource(R.drawable.transparent_back);
+                    i9.setImageResource(R.drawable.transparent_back);
+                    for (int i = 0; i <= 2; i++) for (int j = 0; j <=2; j++) grid[i][j] = 0;
+                });
+                l.addView(b);
+
+                TextView scoreFirstPlayer = findViewById(R.id.playerOneScore);
+                TextView scoreSecondPlayer = findViewById(R.id.playerTwoScore);
+                if (!player1) {
+                    int plusOne = Integer.parseInt(String.valueOf(scoreFirstPlayer.getText())) + 1;
+                    scoreFirstPlayer.setText(String.valueOf(plusOne));
+                } else if (!player2) {
+                    int plusOne = Integer.parseInt(String.valueOf(scoreSecondPlayer.getText())) + 1;
+                    scoreSecondPlayer.setText(String.valueOf(plusOne));
+                }
+            }
         }
     }
 
@@ -119,15 +166,15 @@ public class MainActivity extends AppCompatActivity {
         playerOneName.setText(player1Name);
         playerTwoName.setText(player2Name);
 
-        ImageView i1 = findViewById(R.id.i1);
-        ImageView i2 = findViewById(R.id.i2);
-        ImageView i3 = findViewById(R.id.i3);
-        ImageView i4 = findViewById(R.id.i4);
-        ImageView i5 = findViewById(R.id.i5);
-        ImageView i6 = findViewById(R.id.i6);
-        ImageView i7 = findViewById(R.id.i7);
-        ImageView i8 = findViewById(R.id.i8);
-        ImageView i9 = findViewById(R.id.i9);
+        i1 = findViewById(R.id.i1);
+        i2 = findViewById(R.id.i2);
+        i3 = findViewById(R.id.i3);
+        i4 = findViewById(R.id.i4);
+        i5 = findViewById(R.id.i5);
+        i6 = findViewById(R.id.i6);
+        i7 = findViewById(R.id.i7);
+        i8 = findViewById(R.id.i8);
+        i9 = findViewById(R.id.i9);
 
         i1.setOnClickListener((View v) -> {select(i1, 0, 0);});
         i2.setOnClickListener((View v) -> {select(i2, 0, 1);});
